@@ -20,6 +20,14 @@ Employee.belongsTo(Department, {
     onUpdate: "CASCADE",
   });
 
+  var logger = 0;
+
+  function middlewareLogger(req, res, next) {
+    logger++;
+    console.log("Request: "+logger, "Method: ", req.method);
+    next();
+  }
+
 sequelize
   .sync() // sync creates the table if it does not exist in the database
   .then(() => {
@@ -29,7 +37,7 @@ sequelize
     console.log(err);
   });
 
-app.get("/departments", async (req, res) => {
+app.get("/departments", middlewareLogger, async (req, res) => {
   const departments = await Department.findAll();
   res.json(departments);
 });

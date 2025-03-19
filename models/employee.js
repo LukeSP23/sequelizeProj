@@ -17,4 +17,4 @@ const Employee = sequelize.define("Employee", {
   },
 });
 
-module.exports = Employee;
+  module.exports = Employee;
